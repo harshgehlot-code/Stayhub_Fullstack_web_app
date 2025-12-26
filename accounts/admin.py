@@ -12,4 +12,5 @@ admin.site.register(Hotel)
 
 admin.site.register(Ameneties)
 
+# admin.site.register(HotelImages)
 admin.site.register(HotelImages)
