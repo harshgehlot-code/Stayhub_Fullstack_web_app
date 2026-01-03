@@ -1,0 +1,60 @@
+{% extends "utils/base.html" %}
+
+{% block start %}
+
+
+<div class="container mt-5 pt-5 pb-5">
+  <div class="col-12 col-md-8 col-lg-6 mx-auto mb-4">
+    <form class="d-flex flex-column flex-md-row gap-2">
+      <input type="text" name="search" class="form-control" placeholder="Search hotels...">
+      <select class="form-control" name="sort_by">
+        <option value="">Choose</option>
+        <option value="sort_low">Sort by Low to High</option>
+        <option value="sort_high">Sort by High to Low</option>
+      </select>
+      <button type="submit" class="btn btn-warning">Search</button>
+    </form>
+  </div>
+    <div class="row g-3">
+      {% for hotel in hotels %}
+        <div class="col-md-3 col-sm-6 col-12">
+            <div class="card shadow h-100">
+              <a href="{% url 'hotel_details' hotel.hotel_slug %}" class="text-decoration-none text-dark">
+              {% if hotel.hotel_images.first %}
+              {% comment %} <img src="{{hotel.hotel_images.first.hotel_images}}"  {% endcomment %}
+               <img src="{{ hotel.hotel_images.first.hotel_images.url }}"
+               {% comment %} <img = src="/media/hotel_images/image1.jpg" {% endcomment %}
+                class="card-img-top"
+                alt="Hotel Image">
+               {% else %}
+
+               <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" class="card-img-top" alt="...">
+               {% endif %}
+              <div class="card-body">
+                  <h5 class="card-title">{{hotel.hotel_name}}</h5>
+
+                    <div class="mb-2">
+                      Price <span class="badge text-bg-danger">{{hotel.hotel_price}}</span>
+                      {% if hotel.hotel_offer_price and hotel.hotel_offer_price > 0 %}
+                      <br>Offer Price <span class="badge text-bg-success">{{hotel.hotel_offer_price}}</span>
+                      {% endif %}
+                    </div>
+<hr>
+                  <p class="mb-2">{{hotel.hotel_location}}</p>
+                  <div class="mb-2">
+                    {% for amenity in hotel.ameneties.all %}
+                    <span class="badge text-bg-primary me-1 mb-1">{{amenity.name}}</span>
+                    {% endfor %}
+                  </div>
+
+                </div>
+              </a>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}
