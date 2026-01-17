@@ -1,0 +1,53 @@
+{% extends "utils/base.html" %} 
+{% block start %}
+<div class="container mt-5 pt-5 pb-5 center">
+  <div class="col-md-6 mx-auto card p-5 shadow" style="border: none">
+   
+    <form class="" method="POST">
+        {% include "utils/alerts.html"%}
+        {% csrf_token %}
+      
+      <div class="mb-3">
+        
+        <label for="exampleInputEmail1">Email address</label>
+        <input
+          id = "email"
+          type="email"
+          name="email"
+          class="form-control"
+          {% comment %} id="exampleInputEmail1" {% endcomment %}
+          aria-describedby="emailHelp"
+        />
+    </div>
+      
+    <div class="mb-3">
+        <label for="exampleInputPassword1">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+    </div>
+      
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-success" onclick="sendOtp()">Log with OTP</button>
+    
+</form>
+ 
+</div>
+</div>
+
+  <script>
+    function sendOtp(){
+      var email = document.getElementById("email").value
+      if(email == ""){
+        alert("Email cannot be blank")
+      }
+      
+      window.location.href = `/accounts/send_otp/${email}/`
+      
+  }
+  </script>
+
+{% endblock %}
